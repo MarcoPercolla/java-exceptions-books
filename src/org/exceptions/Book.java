@@ -18,7 +18,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        if (title == null) {
+        if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("Il titolo non può essere vuoto");
         }
         this.title = title;
@@ -29,7 +29,7 @@ public class Book {
     }
 
     public void setPageCount(int pageCount) {
-        if (pageCount <= 0) {
+        if (pageCount <= 0   ) {
             throw new IllegalArgumentException("Il numero di pagine deve essere maggiore di zero");
         }
         this.pageCount = pageCount;
@@ -40,7 +40,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
-        if (author == null) {
+        if (author == null || author.isEmpty()) {
             throw new IllegalArgumentException("L'autore non può essere vuoto");
         }
         this.author = author;
@@ -51,7 +51,7 @@ public class Book {
     }
 
     public void setPublisher(String publisher) {
-        if (publisher == null) {
+        if (publisher == null || publisher.isEmpty()) {
             throw new IllegalArgumentException("L'editore non può essere vuoto");
         }
         this.publisher = publisher;
