@@ -1,3 +1,4 @@
+
 package org.exceptions;
 
 import java.io.*;
@@ -5,10 +6,9 @@ import java.util.Scanner;
 
 public class Library {
     private static final String FILE_NAME = "./src/org/exceptions/books.txt";
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        try {
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("Inserisci il numero di libri da aggiungere: ");
             int n = scanner.nextInt();
             scanner.nextLine();
@@ -45,38 +45,23 @@ public class Library {
             for (Book book : loadedBooks) {
                 System.out.println(book);
             }
-        } finally {
-            scanner.close();
         }
     }
 
     private static void writeBooksToFile(Book[] books) {
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(FILE_NAME);
+        try (FileWriter writer = new FileWriter(FILE_NAME)) {
             for (Book book : books) {
                 writer.write(book.toString() + "\n");
             }
             System.out.println("Dati salvati su file con successo.");
         } catch (IOException e) {
             System.out.println("Errore durante la scrittura su file: " + e.getMessage());
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                System.out.println("Errore durante la chiusura del writer: " + e.getMessage());
-            }
         }
     }
 
     private static Book[] readBooksFromFile() {
         Book[] books = null;
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(FILE_NAME);
-
+        try (FileReader fileReader = new FileReader(FILE_NAME)) {
             int count = 0;
             int ch;
             boolean newLine = true;
@@ -93,18 +78,9 @@ public class Library {
             books = new Book[count];
         } catch (IOException e) {
             System.out.println("Errore durante la lettura dal file: " + e.getMessage());
-        } finally {
-            try {
-                if (fileReader != null) {
-                    fileReader.close();
-                }
-            } catch (IOException e) {
-                System.out.println("Errore durante la chiusura del FileReader: " + e.getMessage());
-            }
         }
 
-        try {
-            fileReader = new FileReader(FILE_NAME);
+        try (FileReader fileReader = new FileReader(FILE_NAME)) {
             int index = 0;
             String line = "";
             int ch;
@@ -132,14 +108,6 @@ public class Library {
             }
         } catch (IOException e) {
             System.out.println("Errore durante la lettura dal file: " + e.getMessage());
-        } finally {
-            try {
-                if (fileReader != null) {
-                    fileReader.close();
-                }
-            } catch (IOException e) {
-                System.out.println("Errore durante la chiusura del FileReader: " + e.getMessage());
-            }
         }
 
         return books;
